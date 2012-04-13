@@ -1,0 +1,11 @@
+<object class="Document">
+    <properties>
+        <title>Test Document</title>
+        <max_versions>4</max_versions>
+        <add_as_draft>true</add_as_draft>
+        <isInteract>false</isInteract>
+        <autoMovePreferredVersion>true</autoMovePreferredVersion>
+        <parent>Folder-11</parent>
+        <content>file:///c:/xerox/src/DocuShare3/dist/documents/tmp/test.txt.tmp</content>
+    </properties>
+</object>

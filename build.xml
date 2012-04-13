@@ -1,0 +1,20 @@
+<project name="xml2jdom" default="build" basedir=".">
+  
+  <target name="build" depends="while.mac"/>
+  
+  
+  
+  <target name="while.mac">
+    <java classname="net.sf.saxon.Query" failonerror="true" output="while.saxon.xml">
+      <arg value="xml2jdom.xql"/>
+      <classpath>
+	<pathelement location="/opt/local/share/java/saxon8.jar"/>
+	<pathelement location="/usr/share/java/ant-1.7.1/lib/xercesImpl.jar"/>
+      </classpath>
+      <arg value="!indent=yes"/>
+      <arg value="+doc=while.xml"/> 	
+    </java>
+  </target>
+  
+  
+</project>
