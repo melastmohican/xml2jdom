@@ -1,20 +1,49 @@
 <project name="xml2jdom" default="build" basedir=".">
-  
-  <target name="build" depends="while.mac"/>
-  
-  
-  
-  <target name="while.mac">
-    <java classname="net.sf.saxon.Query" failonerror="true" output="while.saxon.xml">
-      <arg value="xml2jdom.xql"/>
-      <classpath>
-	<pathelement location="/opt/local/share/java/saxon8.jar"/>
-	<pathelement location="/usr/share/java/ant-1.7.1/lib/xercesImpl.jar"/>
-      </classpath>
-      <arg value="!indent=yes"/>
-      <arg value="+doc=while.xml"/> 	
-    </java>
-  </target>
-  
-  
+
+    <!-- set the operating system test properties -->
+    <condition property="isMac">
+        <os family="mac" />
+    </condition>
+
+    <condition property="isWindows">
+        <os family="windows" />
+    </condition>
+
+    <condition property="isUnix">
+        <os family="unix" />
+    </condition>
+
+    <target name="build" depends="sample.mac, sample.win, sample.unx"/>
+
+
+    <target name="sample.mac" if="isMac">
+        <echo message="Came into the Mac target" />
+        <java classname="net.sf.saxon.Query" failonerror="true" output="sample.saxon.xml">
+            <arg value="xml2jdom.xql"/>
+            <classpath>
+                <pathelement location="/opt/local/share/java/saxon8.jar"/>
+                <pathelement location="/usr/share/java/ant-1.7.1/lib/xercesImpl.jar"/>
+            </classpath>
+            <arg value="!indent=yes"/>
+            <arg value="+doc=sample.xml"/> 	
+        </java>
+    </target>
+
+    <target name="sample.win" if="isWindows">
+        <echo message="Came into the Windows target" />
+        <java classname="net.sf.saxon.Query" failonerror="true" output="sample.saxon.xml">
+            <arg value="xml2jdom.xql"/>
+            <classpath>
+                <pathelement location="C:/Program Files/saxonb9/lib/saxon9.jar"/>
+
+            </classpath>
+            <arg value="+doc=sample.xml"/> 	
+        </java>
+    </target>
+
+    <target name="sample.unx" if="isUnix">
+        <echo message="Came into the Unix target" />
+    </target>
+
+
 </project>

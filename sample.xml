@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<pipeline methods="get">
+    <variable name="test" select="'*'"  />
+    <variable name="uriFile" select="''"  />
+    <ddf file="assets/small.zip"/>
+    <variable name="key" select="/BULK_TRANSITION/BATCH/BATCH_ID"/>
+    <variable name="contentCreate" select="/*">
+        <include file="assets/contentCreate.xml" />
+    </variable>
+    <while test="$test!=''">
+        <replace select="$contentCreate"/>
+        <set name="uriFile" select="/content/data/@ref">
+            <action method="post" resource="/elf/content" />
+        </set>
+        <set name="test" select="/content/uri">
+            <documentStore uri="{uriFile}" key="{key}"/>
+        </set>
+    </while>
+</pipeline>

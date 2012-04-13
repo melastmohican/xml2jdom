@@ -10,21 +10,39 @@ declare function local:getAttribute($atr) as xs:string {
 };
 
 declare function local:getAttributes($ele) as xs:string {
-	for $a in $ele/attribute::*
-	return local:getAttribute($a)
+	string-join(
+    	(for $a in $ele/attribute::*
+    	return local:getAttribute($a)
+    	)
+	,"")
+};
+
+declare function local:getContent($ele) as xs:string {
+    if(not(empty($ele/child::*)))
+    then      
+        string-join(
+            (for $e in $ele/child::*
+            return concat(".addContent(
+            ",local:getElement($e),")")
+            )
+        ,"") 
+    else
+        ""
+    
 };
 
 (: new Element("pipeline") :)
-declare function local:getElement($ele, $path as xs:string?) as xs:string {
+declare function local:getElement($ele) as xs:string {
 	let $e := concat("new Element(""",name($ele),""")
 ")	
 	let $a := local:getAttributes($ele)
-	return concat($e,$a)
+	let $c := local:getContent($ele)
+	return concat($e,$a,$c)
 };
 
 declare function local:getDocument() {
 	<code>
-	{local:getElement($doc/pathway/pipeline, ())}
+	{local:getElement($doc/*)}
 	</code>
 };
 
